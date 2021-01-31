@@ -1,0 +1,340 @@
+<html>
+<head>
+        <!DOCTYPE html>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&display=swap" rel="stylesheet">
+        <title>CatsLikeLasers</title>
+</head>
+
+<!--Webpage Title-->
+<header>
+    <h1 style = " font-family: Coda Caption; color: rgb(248, 247, 247);text-align: center;font-size: 6vw;">
+        Cats Like Lasers
+    </h1>
+</header>
+
+<!-- CSS For most of the DIVs-->
+<body>
+    <style>
+    body {
+      background-image: url('https://media.npr.org/assets/img/2020/08/27/nasa-goods-real_wide-9168d715c2d4c488d7a0e594b397d7abdd969d9d.png');
+    }
+    #twitch-embed {
+        display: inline-block;
+        width: 60%;
+    }
+    #bussins button {
+        background-color:	rgb(97, 49, 87);
+        color: white;
+        border-radius: 12px;
+        margin: auto;
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 6px;
+
+    }
+    #bussins div button {
+        border-radius:12px;
+        margin: auto;
+        width: 40%;
+        display: inline-block;
+    }
+
+    #mouse-box {
+        float: right;
+        width: 100%;
+        margin: auto;
+        background-color: white;
+        z-index: 5;
+        position: relative;
+    }
+
+    #mouse-box:hover{
+        cursor:pointer;
+    }
+
+    #right-panel {
+        width: 30%;
+        float: right;
+        margin-right: 5%;
+    }
+
+    #red-dot {
+        background-color: red;
+        position: absolute;
+        border-radius: 50%;
+        width: 3px;
+        height: 3px;
+        top: 50%;
+        left: 50%;
+        z-index: 10;
+        
+    }
+
+
+    #onoffButton button{
+        background-color:	rgb(97, 49, 87);
+        color: white;
+        border-radius: 12px;
+        padding: 6px;
+        display: inline-block;
+    }
+
+    </style>
+
+<!-- Pretty cool scripts-->
+<script>
+    var red_dot_x;
+    var red_dot_y;
+
+    // Send POST request to server telling it to move left
+    function left() {
+        const params = {
+            "direction": "left"
+        }
+        const http = new XMLHttpRequest()
+        http.open('POST', '/')
+        http.setRequestHeader('Content-type', 'application/json')
+        http.send(JSON.stringify(params))
+
+        // Receive new coordinates from server, update red dot location
+        http.onload = function() {
+            var data = JSON.parse(this.responseText);
+            red_dot_x = 100 - (data.X * 100/180);
+            red_dot_y = 100 - (data.Y * 100/180);
+            document.getElementById('red-dot').style.left = "" + red_dot_x + "%";
+            document.getElementById('red-dot').style.top = "" + red_dot_y + "%";
+        };
+
+    }
+        // Send POST request to server telling it to move right
+    function right() {
+        const params = {
+            "direction": "right"
+        }
+
+        const http = new XMLHttpRequest()
+        http.open('POST', '/')
+        http.setRequestHeader('Content-type', 'application/json')
+        http.send(JSON.stringify(params))
+
+        // Receive new coordinates from server, update red dot location
+        http.onload = function() {
+            var data = JSON.parse(this.responseText);
+            red_dot_x = 100 - (data.X * 100/180);
+            red_dot_y = 100 - (data.Y * 100/180);
+            document.getElementById('red-dot').style.left = "" + red_dot_x + "%";
+            document.getElementById('red-dot').style.top = "" + red_dot_y + "%";
+        };
+
+    }
+
+    function onoff() {
+        const params = {
+            "direction": "onoff"
+        }
+
+        const http = new XMLHttpRequest()
+        http.open('POST', '/')
+        http.setRequestHeader('Content-type', 'application/json')
+        http.send(JSON.stringify(params))
+        
+        // Receive new coordinates from server, update red dot location
+        http.onload = function() {
+            var data = JSON.parse(this.responseText);
+            red_dot_x = 100 - (data.X * 100/180);
+            red_dot_y = 100 - (data.Y * 100/180);
+        };
+
+    }
+
+    function circle() {
+        const params = {
+            "circle": "1"
+        }
+
+        const http = new XMLHttpRequest()
+        http.open('POST', '/')
+        http.setRequestHeader('Content-type', 'application/json')
+        http.send(JSON.stringify(params))
+    }
+
+    // Send POST request to server telling it to move up
+    function up() {
+        const params = {
+            "direction": "up"
+        }
+
+        const http = new XMLHttpRequest()
+        http.open('POST', '/')
+        http.setRequestHeader('Content-type', 'application/json')
+        http.send(JSON.stringify(params))
+
+        // Receive new coordinates from server, update red dot location
+        http.onload = function() {
+            var data = JSON.parse(this.responseText);
+            red_dot_x = 100 - (data.X * 100/180);
+            red_dot_y = 100 - (data.Y * 100/180);
+            document.getElementById('red-dot').style.left = "" + red_dot_x + "%";
+            document.getElementById('red-dot').style.top = "" + red_dot_y + "%";
+        };
+
+    }
+    // Send POST request to server telling it to move down
+    function down() {
+        const params = {
+            "direction": "down"
+        }
+
+        const http = new XMLHttpRequest()
+        http.open('POST', '/')
+        http.setRequestHeader('Content-type', 'application/json')
+        http.send(JSON.stringify(params))
+
+        // Receive new coordinates from server, update red dot location
+        http.onload = function() {
+            var data = JSON.parse(this.responseText);
+            red_dot_x = 100 - (data.X * 100/180);
+            red_dot_y = 100 - (data.Y * 100/180);
+            document.getElementById('red-dot').style.left = "" + red_dot_x + "%";
+            document.getElementById('red-dot').style.top = "" + red_dot_y + "%";
+        };
+    }
+</script>
+
+<!-- Div for embedded twitch stream (will always be the same channel!) -->
+<div id="twitch-embed">
+<script src="https://player.twitch.tv/js/embed/v1.js" style = "margin-right: 5%;"></script>
+<script type="text/javascript">
+  new Twitch.Player("twitch-embed", {
+    channel: "CatsLikeLasers",
+    width: '100%',
+    height: '70%',
+  });
+</script>
+
+</div>
+
+<!--Right Pannel holds the buttons and mouse window, bussins refers to the four buttons-->
+<div id='right-panel'>
+<div id= "bussins" style = "width: 100%; margin: auto; float: right; margin-bottom: 5%">
+    <button onclick="up()" >Move Up</button>
+    <br>
+    <!--Div for left and Right buttons, makes it so everything will properly be centered-->
+    <div style = "text-align: center">
+    <button onclick="left()" >Move Left</button>
+    <button onclick="right()">Move Right</button>
+    </div>
+    <br>
+    
+    <button onclick="down()">Move Down</button>
+</div>
+
+<!--Div for the mouse box you can click on to move the laser-->
+<div id= "mouse-box" onmousemove="capmouse(event)" onclick="sendP(this.width, this.height, findPos(this)) ">
+    <div id='red-dot'></div>
+  <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/768px-Solid_white.svg.png" onclick="sendP(this.width, this.height, findPos(this)) "
+    style = "width: 100%; height:40%; float:right">
+</div>
+
+</div>
+
+<!--JS for the mouse clicks on the white box-->
+<script language="JavaScript" type="text/JavaScript">
+    var posx;
+    var posy;
+
+    // Capture mouse position within white box
+    function capmouse(e){
+        posx = 0; posy = 0;
+        if (!e){var e = window.event;}
+        if (e.pageX || e.pageY){
+            posx = e.pageX;
+            posy = e.pageY;
+        }
+        else if (e.clientX || e.clientY){
+            posx = e.clientX;
+            posy = e.clientY;
+        }
+    }
+
+    // Send new coordinates to server based on where user clicked inside the white box
+    function sendP(imageWidth, imageHeight, location){
+        const params = {
+            X : (((posx-location.X)/imageWidth) * 180),
+            Y : (((posy-location.Y)/imageHeight) * 180)
+        }
+
+        const http = new XMLHttpRequest()
+        http.open('POST', '/')
+        http.setRequestHeader('Content-type', 'application/json')
+        http.send(JSON.stringify(params))
+        
+        // Receive new coordinates from server, update red dot location
+        http.onload = function() {
+            var data = JSON.parse(this.responseText);
+            red_dot_x = 100 - (data.X * 100/180);
+            red_dot_y = 100 - (data.Y * 100/180);
+            document.getElementById('red-dot').style.left = "" + red_dot_x + "%";
+            document.getElementById('red-dot').style.top = "" + red_dot_y + "%";
+        };
+    }
+
+    // Adjust mouse coordinates based on location of white box
+    function findPos(obj){
+        var curleft = 0;
+        var curtop = 0;
+
+        if (obj.offsetParent) {
+            do {
+                curleft += obj.offsetLeft;
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+
+        return {X:curleft,Y:curtop};
+    }
+    }
+
+    // Makes the site check each keypress for arrowkeys, moves the laser if it is an arrow key
+    document.onkeydown = checkKey;
+    function checkKey(e) {
+
+        e = e || window.event;
+
+        // Up arrow key
+        if (e.keyCode == '38') {
+            up();
+        }
+        // Down arrow key
+        else if (e.keyCode == '40') {
+            down();
+        }
+        // Left arrow key
+        else if (e.keyCode == '37') {
+        left();
+        }
+        // Right arrow key
+        else if (e.keyCode == '39') {
+        right();
+        }
+        // Space bar
+        else if (e.keyCode == 32) {
+            onoff();
+        }
+
+    }
+</script>
+
+
+<p style = "color:rgb(248, 247, 247); font-size: 1vw; float: right; font-family: Coda Caption;">You can click on the white box to move the laser pointer to the same spot in frame! /ᐠ｡ꞈ｡ᐟ\</p>
+<div id = "btn-group">
+    <div id= onoffButton>
+    <button onclick = "onoff()">Laser On/Off</button>
+    </div>
+</div>
+
+</body>
+</html>
